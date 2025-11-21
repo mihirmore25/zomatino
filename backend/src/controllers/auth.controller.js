@@ -97,7 +97,7 @@ export async function logoutUser(req, res) {
 }
 
 export async function registerFoodPartner(req, res) {
-    const { name, email, password } = req.body;
+    const { name, contactName, phone, address, email, password } = req.body;
 
     const isAccountAlreadyExists = await foodPartnerModel.findOne({
         email,
@@ -116,6 +116,9 @@ export async function registerFoodPartner(req, res) {
         name,
         email,
         password: hashedPassword,
+        contactName,
+        phone,
+        address,
     });
 
     const token = jwt.sign(
@@ -134,6 +137,9 @@ export async function registerFoodPartner(req, res) {
             _id: foodpartner._id,
             name: foodpartner.name,
             email: foodpartner.email,
+            contactName: foodpartner.contactName,
+            phone: foodpartner.phone,
+            address: foodpartner.address,
         },
     });
 }
@@ -180,6 +186,9 @@ export async function loginFoodPartner(req, res) {
             _id: foodpartner._id,
             name: foodpartner.name,
             email: foodpartner.email,
+            contactName: foodpartner.contactName,
+            phone: foodpartner.phone,
+            address: foodpartner.address,
         },
     });
 }
@@ -191,4 +200,3 @@ export async function logoutFoodPartner(req, res) {
         message: "Food partner logged out successfully",
     });
 }
-
