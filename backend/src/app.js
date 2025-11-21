@@ -5,6 +5,7 @@ import morgan from "morgan";
 import cors from "cors";
 import authRoutes from "./routes/auth.routes.js";
 import foodRoutes from "./routes/food.routes.js";
+import foodPartnerRoutes from "./routes/food-partner.routes.js";
 
 export const app = express();
 
@@ -20,6 +21,7 @@ app.use(morgan("dev"));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/food", foodRoutes);
+app.use("/api/food-partner", foodPartnerRoutes);
 
 app.get("/", (req, res) => {
     res.send("Hello World");
