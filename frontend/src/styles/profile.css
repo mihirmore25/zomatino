@@ -1,0 +1,141 @@
+/* Profile layout for food-partner (uses theme variables) */
+
+/* Use border-box to avoid sizing surprises */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.profile-page {
+    min-height: 100vh;
+    background: var(--bg);
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.profile-card {
+    width: 100%;
+    max-width: 980px;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 8px 20px rgba(var(--shadow-rgb), 0.06);
+    overflow: hidden;
+}
+.profile-top {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    flex-wrap: wrap; /* allow avatar and pills to wrap on small screens */
+}
+.avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    /* default fallback background; if a background-image is provided inline it will show */
+    background: linear-gradient(
+        180deg,
+        rgba(var(--shadow-rgb), 0.06),
+        rgba(var(--shadow-rgb), 0.02)
+    );
+    background-size: cover; /* ensure the image covers the avatar area (object-fit equivalent) */
+    background-position: center;
+    border: 1px solid var(--border);
+    flex: 0 0 96px;
+}
+.profile-right {
+    flex: 1;
+    min-width: 0;
+}
+.pills {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+}
+.pill {
+    background: var(--card);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    width: auto;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(var(--shadow-rgb), 0.03);
+}
+
+.profile-stats {
+    display: flex;
+    gap: 24px;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 12px 0;
+    flex-wrap: wrap;
+}
+.stat {
+    flex: 1 1 120px;
+    text-align: center;
+    min-width: 100px;
+}
+.stat-label {
+    color: var(--muted);
+    font-size: 13px;
+}
+.stat-value {
+    font-weight: 700;
+    font-size: 18px;
+    margin-top: 6px;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0; /* remove gaps so videos touch each other */
+    margin-top: 14px;
+}
+.video-thumb {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover; /* ensure video covers cell */
+    background-size: cover;
+    background-position: center;
+    border-radius: 0; /* no rounded corners */
+    border: none; /* remove separators between tiles */
+    box-shadow: none;
+    min-height: 120px;
+    display: block;
+}
+
+@media (max-width: 720px) {
+    .profile-card {
+        padding: 14px;
+    }
+    .pills {
+        align-items: flex-start;
+    }
+    .pill {
+        min-width: 0;
+    }
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 420px) {
+    .avatar {
+        width: 76px;
+        height: 76px;
+        flex: 0 0 76px;
+    }
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0; /* ensure no gaps on very small screens */
+    }
+    .video-thumb {
+        aspect-ratio: 3/4;
+    }
+}

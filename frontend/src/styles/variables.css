@@ -1,0 +1,34 @@
+:root {
+    /* Light theme tokens (pastel / white panels) */
+    --bg: #f3f8ff; /* very light cool background */
+    --card: #fbfdff; /* white pastel panel */
+    --text: #0f1724; /* dark text */
+    --muted: #5b6674; /* muted bluish-gray */
+    --muted-rgb: 91, 102, 116;
+    --accent: #1e90ff; /* primary blue accent */
+    --accent-rgb: 30, 144, 255;
+    --radius: 10px;
+    --gap: 14px;
+    --switch-font-size: 13px;
+    --switch-gap: 8px;
+    --hover-accent-opacity: 0.08; /* tune hover accent */
+    --btn-shadow-opacity: 0.06;
+    --btn-translate: 2px;
+    --border: rgba(15, 23, 36, 0.06);
+    --shadow-rgb: 2, 6, 23;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Dark theme tokens (darker blue panels) */
+        --bg: #041426; /* deep navy background */
+        --card: #032542; /* darker blue panel */
+        --text: #e6eef8; /* light text */
+        --muted: #9fb4c8; /* muted bluish text */
+        --muted-rgb: 159, 180, 200;
+        --accent: #60a5ff; /* softer light blue accent for dark bg */
+        --accent-rgb: 96, 165, 255;
+        --border: rgba(255, 255, 255, 0.04);
+        --shadow-rgb: 0, 0, 0;
+    }
+}
