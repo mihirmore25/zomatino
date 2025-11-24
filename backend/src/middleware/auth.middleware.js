@@ -52,3 +52,44 @@ export async function authUserMiddleware(req, res, next) {
         });
     }
 }
+
+export async function checkAuthMiddleware(req, res, next) {
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.status(401).json({
+            status: false,
+            message: "Unauthorized: No token provided",
+        });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        let user = null;
+        let role = decoded.role;
+
+        if (role === "user") {
+            user = await userModel.findById(decoded.id);
+        } else if (role === "food-partner") {
+            user = await foodPartnerModel.findById(decoded.id);
+        }
+
+        if (!user) {
+            return res.status(401).json({
+                status: false,
+                message: "Unauthorized: User not found",
+            });
+        }
+
+        req.entity = user;
+        req.role = role;
+        next();
+
+    } catch (error) {
+        return res.status(401).json({
+            status: false,
+            message: "Unauthorized: Invalid token",
+        });
+    }
+}
