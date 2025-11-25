@@ -1,4 +1,6 @@
 import express from "express";
+import passport from "passport";
+import jwt from "jsonwebtoken";
 import {
     loginUser,
     logoutUser,
@@ -24,6 +26,43 @@ router.post("/food-partner/register", registerFoodPartner);
 router.post("/food-partner/login", loginFoodPartner);
 router.get("/food-partner/logout", logoutFoodPartner);
 router.get("/food-partner/profile", checkAuthMiddleware, getFoodPartnerProfile);
+
+// Google OAuth routes
+// Initiate Google OAuth flow
+router.get(
+    "/google",
+    passport.authenticate("google", {
+        scope: ["profile", "email"],
+    })
+);
+
+// Google OAuth callback
+router.get(
+    "/google/callback",
+    passport.authenticate("google", {
+        failureRedirect: "http://localhost:5173/user/login",
+        session: false  // We'll use JWT instead of sessions for auth
+    }),
+    (req, res) => {
+        // Generate JWT token for the authenticated user
+        const token = jwt.sign(
+            {
+                id: req.user._id,
+                role: req.user.role,
+            },
+            process.env.JWT_SECRET
+        );
+
+        // Set cookie
+        res.cookie("token", token, {
+            httpOnly: true,
+            sameSite: "lax",
+        });
+
+        // Redirect to frontend home page
+        res.redirect("http://localhost:5173/");
+    }
+);
 
 // check auth - used by frontend ProtectedRoute
 router.get("/check", checkAuthMiddleware, (req, res) => {
